@@ -150,16 +150,55 @@ This module also includes a potentiometer that will fix the threshold value, & t
 
 
 ##  Program 
+```c
+#include "main.h"
+#include"stdio.h"
+uint32_t adcvalue;
+#if defined (__ICCARM__) || defined (__ARMCC_VERSION)
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#elif defined(__GNUC__)
+
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#endif
+int main(void)
+{
+  HAL_Init();
+  SystemClock_Config();
+  MX_GPIO_Init();
+  MX_ADC1_Init();
+  MX_USART2_UART_Init();
+   while (1)
+  {
+	  HAL_ADC_Start(&hadc1);
+	  			HAL_ADC_PollForConversion(&hadc1,100);
+	  			adcvalue = HAL_ADC_GetValue(&hadc1);
+	  			HAL_ADC_Stop(&hadc1);
+	  			HAL_Delay(500);
+	  			printf("ADC VALUE:%ld\n",adcvalue);
+  }
+  
+}
+PUTCHAR_PROTOTYPE
+{
+
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+
+  return ch;
+}
+
+```
 
 
- 
+## Output  :
+1.The Circuit :
+![pmc-exp81](https://github.com/shoaib3136/Ex.-No.8-CONFIGURING-ANALOG-PORT-TO-INTEFACE-AN-ANALOG-SENSOR-AND-READ-THE-VALUES-USING-SERIAL-PORT/assets/117919362/634cf150-1a59-4f9d-906b-2ac52d25e75d)
+
+2.The moisture content reading:
+![WhatsApp Image 2023-11-01 at 11 14 16_144ef208](https://github.com/shoaib3136/Ex.-No.8-CONFIGURING-ANALOG-PORT-TO-INTEFACE-AN-ANALOG-SENSOR-AND-READ-THE-VALUES-USING-SERIAL-PORT/assets/117919362/fadda0d1-ef23-4c3a-9c28-2348fe3b864c)
+
+3.The moisture content reading 2:
+![pmc-exp82](https://github.com/shoaib3136/Ex.-No.8-CONFIGURING-ANALOG-PORT-TO-INTEFACE-AN-ANALOG-SENSOR-AND-READ-THE-VALUES-USING-SERIAL-PORT/assets/117919362/8980193c-6c4f-46ff-98eb-fa90217b2236)
 
 ## Result :
+Thus, the configuring analog port to interface an analog sensor and read the values using serial port is successfully executed.
  
-## Output  :
-
-
-
-
-
-
